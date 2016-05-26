@@ -4,25 +4,29 @@ MAINTAINER Peter Siska "pesche@gridonic.ch"
 
 COPY config/custom.ini /usr/local/etc/php/conf.d/
 
-RUN apt-get update && apt-get install -yqq zlib1g-dev libicu-dev libpq-dev \
+RUN apt-get update && apt-get install -yqq --no-install-recommends zlib1g-dev libicu-dev libpq-dev sqlite3 libsqlite3-dev \
     && docker-php-ext-install opcache \
     && docker-php-ext-install intl \
     && docker-php-ext-install mbstring \
     && docker-php-ext-install pdo_mysql \
     && docker-php-ext-install pdo_pgsql \
-    && docker-php-ext-install zip
+    && docker-php-ext-install pdo_sqlite \
+    && docker-php-ext-install zip \
+    && rm -r /var/lib/apt/lists/*
 
 # Install git and curl
-RUN apt-get install -yqq --no-install-recommends git curl
+RUN apt-get update && apt-get install -yqq --no-install-recommends git curl \
+    && rm -r /var/lib/apt/lists/*
 
 # APCu
 RUN pecl install apcu-4.0.11 \
     && echo extension=apcu.so > /usr/local/etc/php/conf.d/apcu.ini
 
 # Imagick
-RUN apt-get -yqq --no-install-recommends install libmagickwand-dev \
+RUN apt-get update && apt-get install -yqq --no-install-recommends libmagickwand-dev \
     && pecl install imagick \
-    && docker-php-ext-enable imagick
+    && docker-php-ext-enable imagick \
+    && rm -r /var/lib/apt/lists/*
 
 # Clean up
 RUN apt-get -y clean \
