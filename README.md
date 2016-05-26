@@ -1,3 +1,3 @@
 # Docker Images
 
-Custom docker images
+A set of custom docker images for CI.
