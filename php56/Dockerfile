@@ -24,8 +24,7 @@ RUN pecl install apcu-4.0.11 \
 # Imagick
 RUN apt-get update && apt-get install -yqq --no-install-recommends libmagickwand-dev \
     && pecl install imagick \
-    && docker-php-ext-enable imagick \
-    && rm -r /var/lib/apt/lists/*
+    && docker-php-ext-enable imagick
 
 # Clean up
 RUN apt-get -y clean \
