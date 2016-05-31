@@ -1,4 +1,4 @@
-FROM php:5.6
+FROM php:5.6-cli
 
 MAINTAINER Peter Siska "pesche@gridonic.ch"
 
